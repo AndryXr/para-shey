@@ -52,7 +52,7 @@
             border-radius: 50%;
             bottom: -60px;
             box-shadow: inset -3px -3px 8px rgba(0,0,0,0.2), 0 5px 10px rgba(255,51,102,0.3);
-            animation: subir Vertical linear forwards;
+            animation: subirVertical linear forwards;
             opacity: 0.5;
         }
         .globo-corazon::before, .globo-corazon::after {
@@ -66,7 +66,7 @@
         .globo-corazon::before { top: -15px; left: 0; }
         .globo-corazon::after { left: -15px; top: 0; }
 
-        @keyframes subir {
+        @keyframes subirVertical {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
             10% { opacity: 0.5; }
             100% { transform: translateY(-120vh) rotate(30deg); opacity: 0; }
@@ -80,6 +80,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-top: 100px; /* Desplazado un poco hacia abajo para dar espacio a las burbujas */
         }
 
         /* Contenedor del Pastel Completo */
@@ -215,81 +216,98 @@
             100% { transform: rotate(-45deg) scale(1.2); }
         }
 
-        /* --- CORAZÓN CENTRAL PERFECTAMENTE VERTICAL --- */
+        /* --- NUEVO CORAZÓN ESTILO BURBUJA FLOTANTE --- */
         .pop-corazon {
             position: fixed;
-            width: 300px;
-            height: 300px;
+            width: 260px;
+            height: 260px;
             z-index: 10;
             pointer-events: none;
-            top: 40%;
+            /* Inicia justo en la zona del pastel */
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
-            animation: aparecerCorazon 3s ease-in-out forwards;
+            animation: flotarBurbujaCorazon 4.5s ease-out forwards;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* El molde del corazón rotado 45 grados de forma correcta */
+        /* Estructura del corazón perfectamente vertical */
         .forma-corazon {
             position: absolute;
-            width: 160px;
-            height: 160px;
-            background-color: rgba(255, 30, 80, 0.95);
+            width: 140px;
+            height: 140px;
+            background-color: rgba(255, 30, 80, 0.93);
             transform: rotate(45deg);
-            box-shadow: 0 15px 40px rgba(255, 51, 102, 0.5);
-            top: 75px; 
+            box-shadow: 0 10px 30px rgba(255, 51, 102, 0.4);
+            top: 65px; 
         }
         .forma-corazon::before, .forma-corazon::after {
             content: "";
             position: absolute;
-            width: 160px;
-            height: 160px;
-            background-color: rgba(255, 30, 80, 0.95);
+            width: 140px;
+            height: 140px;
+            background-color: rgba(255, 30, 80, 0.93);
             border-radius: 50%;
         }
-        .forma-corazon::before { top: -80px; left: 0; }
-        .forma-corazon::after { left: -80px; top: 0; }
+        .forma-corazon::before { top: -70px; left: 0; }
+        .forma-corazon::after { left: -70px; top: 0; }
 
-        /* Texto totalmente plano (0 grados) y perfectamente centrado */
+        /* Texto totalmente derecho y centrado dentro de la burbuja */
         .texto-corazon {
             position: relative;
             z-index: 12;
             color: white;
             font-weight: bold;
-            font-size: 19px;
+            font-size: 17px;
             text-align: center;
             padding: 20px;
             text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
             line-height: 1.4;
-            max-width: 240px;
+            max-width: 200px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* Animación fluida de escala y flotación vertical */
-        @keyframes aparecerCorazon {
-            0% { transform: translate(-50%, -40%) scale(0); opacity: 0; }
-            12% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            35% { transform: translate(-50%, -54%) scale(1); }
-            55% { transform: translate(-50%, -46%) scale(1); }
-            75% { transform: translate(-50%, -54%) scale(1); }
-            90% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            100% { transform: translate(-50%, -65%) scale(0); opacity: 0; }
+        /* ANIMACIÓN BURBUJA: Sube y se bambolea hacia los costados de forma orgánica */
+        @keyframes flotarBurbujaCorazon {
+            0% {
+                transform: translate(-50%, 0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                transform: translate(-50%, -60px) scale(1);
+                opacity: 1;
+            }
+            30% {
+                /* Se bambolea a la izquierda mientras sube */
+                transform: translate(-75%, -160px) scale(1);
+            }
+            55% {
+                /* Se bambolea a la derecha ganando altura */
+                transform: translate(-25%, -280px) scale(1.02);
+            }
+            75% {
+                /* Regresa al centro más arriba */
+                transform: translate(-50%, -400px) scale(1);
+                opacity: 1;
+            }
+            100% {
+                /* Se desvanece por completo en la parte superior */
+                transform: translate(-50%, -550px) scale(0.8);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Fondo ultra denso de flores brillantes -->
     <canvas id="canvas-flores"></canvas>
 
-    <!-- Capa de cientos de globos flotando -->
     <div id="contenedor-globos"></div>
 
-    <!-- Pastel Gourmet interactivo -->
     <div class="interfaz-cumple">
         <div class="contenedor-pastel" onclick="tocarPastel()">
             <div class="llama"></div>
@@ -336,8 +354,7 @@
         let indiceMensaje = 0;
 
         function tocarPastel() {
-            const viejoCorazon = document.querySelector('.pop-corazon');
-            if (viejoCorazon) viejoCorazon.remove();
+            // Ya NO eliminamos el anterior para que puedan flotar varias burbujas juntas si cliquea rápido.
 
             const contenedorCorazon = document.createElement('div');
             contenedorCorazon.classList.add('pop-corazon');
@@ -355,7 +372,8 @@
 
             indiceMensaje = (indiceMensaje + 1) % frasesAmor.length;
 
-            setTimeout(() => { contenedorCorazon.remove(); }, 3000);
+            // Se elimina automáticamente después de 4.5 segundos cuando termina de subir al cielo
+            setTimeout(() => { contenedorCorazon.remove(); }, 4500);
         }
 
         // --- GENERADOR CONSTANTE DE GLOBOS ---
