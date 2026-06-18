@@ -92,6 +92,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
+            transition: transform 0.2s;
         }
         .contenedor-pastel:active {
             transform: scale(0.98);
@@ -118,18 +119,18 @@
         .piso-1 {
             width: 180px;
             height: 55px;
-            background: #6c584c; /* Chocolate oscuro base */
+            background: #6c584c; 
         }
         .piso-2 {
             width: 140px;
             height: 45px;
-            background: #adc178; /* Toque pistacho o crema suave */
+            background: #adc178; 
             margin-bottom: -2px;
         }
         .piso-3 {
             width: 100px;
             height: 40px;
-            background: #ffb5a7; /* Fresa superior */
+            background: #ffb5a7; 
             margin-bottom: -2px;
         }
 
@@ -146,7 +147,7 @@
         .crema-fresa { background: #ff758f; }
         .crema-blanca { background: #ffffff; }
 
-        /* Chispas de colores (Confeti en el pastel) */
+        /* Chispas de colores (Confeti) */
         .chispas {
             position: absolute;
             width: 100%;
@@ -163,7 +164,7 @@
             opacity: 0.7;
         }
 
-        /* Fresas decorativas en la cima */
+        /* Fresas decorativas */
         .decoracion-cima {
             display: flex;
             gap: 8px;
@@ -189,7 +190,7 @@
             border-radius: 50%;
         }
 
-        /* Vela y Llama */
+        /* Vela e Iluminación fija */
         .vela {
             width: 6px;
             height: 32px;
@@ -214,14 +215,14 @@
             100% { transform: rotate(-45deg) scale(1.2); }
         }
 
-        /* --- CORAZÓN CENTRAL VERTICAL FLOTANTE --- */
+        /* --- CORAZÓN CENTRAL PERFECTAMENTE VERTICAL --- */
         .pop-corazon {
             position: fixed;
             width: 300px;
             height: 300px;
             z-index: 10;
             pointer-events: none;
-            top: 38%;
+            top: 40%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
             animation: aparecerCorazon 3s ease-in-out forwards;
@@ -230,27 +231,28 @@
             align-items: center;
         }
 
-        /* Estructura del corazón perfectamente vertical */
+        /* El molde del corazón rotado 45 grados de forma correcta */
         .forma-corazon {
             position: absolute;
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             background-color: rgba(255, 30, 80, 0.95);
-            transform: rotate(-45deg);
+            transform: rotate(45deg);
             box-shadow: 0 15px 40px rgba(255, 51, 102, 0.5);
+            top: 75px; 
         }
         .forma-corazon::before, .forma-corazon::after {
             content: "";
             position: absolute;
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             background-color: rgba(255, 30, 80, 0.95);
             border-radius: 50%;
         }
-        .forma-corazon::before { top: -90px; left: 0; }
-        .forma-corazon::after { left: -90px; top: 0; }
+        .forma-corazon::before { top: -80px; left: 0; }
+        .forma-corazon::after { left: -80px; top: 0; }
 
-        /* Contenedor del texto centrado en horizontal y vertical */
+        /* Texto totalmente plano (0 grados) y perfectamente centrado */
         .texto-corazon {
             position: relative;
             z-index: 12;
@@ -258,32 +260,36 @@
             font-weight: bold;
             font-size: 19px;
             text-align: center;
-            padding: 25px;
+            padding: 20px;
             text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
             line-height: 1.4;
-            max-width: 220px;
-            margin-top: -10px; /* Centrado visual fino */
+            max-width: 240px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* Animación combinada: Aparece con rebote y luego flota de arriba a abajo */
+        /* Animación fluida de escala y flotación vertical */
         @keyframes aparecerCorazon {
             0% { transform: translate(-50%, -40%) scale(0); opacity: 0; }
-            10% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            /* Efecto flotante en el centro */
-            30% { transform: translate(-50%, -53%) scale(1); }
-            50% { transform: translate(-50%, -47%) scale(1); }
-            70% { transform: translate(-50%, -53%) scale(1); }
+            12% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            35% { transform: translate(-50%, -54%) scale(1); }
+            55% { transform: translate(-50%, -46%) scale(1); }
+            75% { transform: translate(-50%, -54%) scale(1); }
             90% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            100% { transform: translate(-50%, -60%) scale(0); opacity: 0; }
+            100% { transform: translate(-50%, -65%) scale(0); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
+    <!-- Fondo ultra denso de flores brillantes -->
     <canvas id="canvas-flores"></canvas>
 
+    <!-- Capa de cientos de globos flotando -->
     <div id="contenedor-globos"></div>
 
+    <!-- Pastel Gourmet interactivo -->
     <div class="interfaz-cumple">
         <div class="contenedor-pastel" onclick="tocarPastel()">
             <div class="llama"></div>
@@ -313,7 +319,7 @@
     </div>
 
     <script>
-        // --- TUS FRASES DENTRO DEL CORAZÓN ---
+        // --- TUS FRASES EN LOS CORAZONES ---
         const frasesAmor = [
             "Eres la mujer más hermosa del mundo 😍",
             "¡Feliz Cumpleaños, mi reina! 🎂",
@@ -330,36 +336,29 @@
         let indiceMensaje = 0;
 
         function tocarPastel() {
-            // Quitamos el corazón anterior de inmediato para evitar superposiciones
             const viejoCorazon = document.querySelector('.pop-corazon');
             if (viejoCorazon) viejoCorazon.remove();
 
-            // Contenedor principal de la animación del corazón
             const contenedorCorazon = document.createElement('div');
             contenedorCorazon.classList.add('pop-corazon');
 
-            // La figura geométrica de fondo (el corazón rojo)
             const forma = document.createElement('div');
             forma.classList.add('forma-corazon');
 
-            // El texto que irá perfectamente plano y centrado
             const texto = document.createElement('div');
             texto.classList.add('texto-corazon');
             texto.innerText = frasesAmor[indiceMensaje];
             
-            // Armamos la estructura
             contenedorCorazon.appendChild(forma);
             contenedorCorazon.appendChild(texto);
             document.body.appendChild(contenedorCorazon);
 
-            // Cambiar de frase cíclicamente
             indiceMensaje = (indiceMensaje + 1) % frasesAmor.length;
 
-            // Se elimina tras completar su animación de 3 segundos
             setTimeout(() => { contenedorCorazon.remove(); }, 3000);
         }
 
-        // --- GENERADOR CONSTANTE DE GLOBOS (Cientos de ellos) ---
+        // --- GENERADOR CONSTANTE DE GLOBOS ---
         const contenedorGlobos = document.getElementById('contenedor-globos');
         const tonosRosa = ['#ff3366', '#ff5e7e', '#ff0040', '#ff85a1', '#ff4d6d'];
 
@@ -380,8 +379,7 @@
         }
         setInterval(generarGlobo, 80);
 
-
-        // --- LÓGICA DE CIENTOS DE FLORES DE NEÓN MECIÉNDOSE ---
+        // --- LÓGICA DE LAS CIENTOS DE FLORES DE NEÓN ---
         const canvas = document.getElementById('canvas-flores');
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
