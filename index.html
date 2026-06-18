@@ -3,56 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Mi Novia ❤️</title>
+    <title>Para Mi Personita Especial ❤️</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body {
+            background-color: #0b0114;
+            overflow: hidden;
             font-family: 'Arial', sans-serif;
-            background-color: #ffe6e6;
-            text-align: center;
-            padding: 20px;
-            color: #333;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
         }
-        .carta {
-            background: white;
+
+        /* Canvas para los Fuegos Artificiales de Fondo */
+        #canvas-fuegos {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Contenedor de los Globos */
+        .contenedor-globos {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding-bottom: 50px;
+        }
+
+        /* Estilo de los Globos de Corazón */
+        .globo {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            background-color: #ff3366;
+            border-radius: 50%;
+            cursor: pointer;
+            animation: flotar 6s ease-in-out infinite alternate;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset -10px -10px 20px rgba(0,0,0,0.3), 0 10px 20px rgba(255,51,102,0.4);
+            transition: transform 0.2s;
+        }
+
+        /* Formar el corazón usando los pseudoelementos */
+        .globo::before, .globo::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: #ff3366;
+            border-radius: 50%;
+        }
+        .globo::before { top: -40px; left: 0; }
+        .globo::after { left: -40px; top: 0; }
+
+        /* El hilo del globo */
+        .hilo {
+            position: absolute;
+            bottom: -60px;
+            left: 40px;
+            width: 2px;
+            height: 60px;
+            background-color: rgba(255,255,255,0.4);
+            z-index: -1;
+        }
+
+        /* Número o texto encima del globo */
+        .texto-globo {
+            position: relative;
+            z-index: 5;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+        }
+
+        /* Variaciones de animaciones y posiciones para que no suban igual */
+        .g1 { animation-delay: 0s; background-color: #ff3366; }
+        .g1::before, .g1::after { background-color: #ff3366; }
+        
+        .g2 { animation-delay: 1.5s; background-color: #ff5e7e; transform: scale(0.9); }
+        .g2::before, .g2::after { background-color: #ff5e7e; }
+
+        .g3 { animation-delay: 0.8s; background-color: #ff0040; transform: scale(1.1); }
+        .g3::before, .g3::after { background-color: #ff0040; }
+
+        @keyframes flotar {
+            0% { transform: translateY(0) rotate(-3deg); }
+            100% { transform: translateY(-150px) rotate(3deg); }
+        }
+
+        /* Ventana Emergente (Modal) para mostrar los mensajes */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.7);
+            width: 85%;
+            max-width: 350px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
-            max-width: 400px;
-            margin: 50px auto;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            z-index: 10;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            opacity: 0;
         }
-        h1 { color: #ff4d6d; }
-        button {
-            background-color: #ff4d6d;
+        .modal.activo {
+            display: block;
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        .modal h2 { color: #ff3366; margin-bottom: 15px; font-size: 24px; }
+        .modal p { color: #333; font-size: 16px; line-height: 1.5; margin-bottom: 20px; }
+        .modal btn {
+            background: #ff3366;
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: 0.3s;
+            font-weight: bold;
         }
-        button:hover { background-color: #ff758f; }
-        .oculto { display: none; margin-top: 20px; font-size: 18px; color: #ff4d6d; }
+
+        /* Fondo oscuro detrás del modal */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 9;
+        }
+        .overlay.activo { display: block; }
     </style>
 </head>
 <body>
 
-    <div class="carta">
-        <h1>¡Feliz Cumpleaños! 💖</h1>
-        <p>Hola mi vida, preparé esta página web especialmente para ti porque eres la persona más importante en mi mundo.</p>
-        
-        <button onclick="revelarMensaje()">Toca aquí si me amas</button>
-        
-        <div id="mensaje" class="oculto">
-            <p>🎉 ¡Te amo con todo mi corazón! 🎉</p>
-            <p>Gracias por cada sonrisa. ¡Espero que pases un día increíble hoy! 🌹</p>
+    <canvas id="canvas-fuegos"></canvas>
+
+    <div class="contenedor-globos">
+        <div class="globo g1" onclick="abrirCarta(1)">
+            <span class="texto-globo">🎈1</span>
+            <div class="hilo"></div>
+        </div>
+        <div class="globo g2" onclick="abrirCarta(2)">
+            <span class="texto-globo">🎈2</span>
+            <div class="hilo"></div>
+        </div>
+        <div class="globo g3" onclick="abrirCarta(3)">
+            <span class="texto-globo">🎈3</span>
+            <div class="hilo"></div>
         </div>
     </div>
 
+    <div class="overlay" id="overlay" onclick="cerrarCarta()"></div>
+    <div class="modal" id="modal">
+        <h2 id="modal-titulo">Para Shey ❤️</h2>
+        <p id="modal-texto">Aquí irá tu romántico mensaje.</p>
+        <button onclick="cerrarCarta()" style="background:#ff3366; color:white; border:none; padding:8px 15px; border-radius:15px; cursor:pointer;">Cerrar</button>
+    </div>
+
     <script>
-        function revelarMensaje() {
-            document.getElementById('mensaje').style.display = 'block';
+        // --- AQUÍ ESCRIBE TUS MENSAJES PERSONALIZADOS ---
+        const mensajes = {
+            1: {
+                titulo: "Nuestra Historia ✨",
+                texto: "Desde el día en que llegaste a mi vida todo cambió para mejor. Gracias por ser mi confidente, mi apoyo y mi compañera de risas. ¡Feliz Cumpleaños, mi reina!"
+            },
+            2: {
+                titulo: "Lo que amo de ti 💖",
+                texto: "Amo tu sonrisa, la forma en que me miras y cómo logras alegrar mis días con solo un mensaje. Eres una mujer increíble y me siento el novio más afortunado del mundo."
+            },
+            3: {
+                titulo: "Mi Promesa 🌹",
+                texto: "Hoy en tu cumpleaños te prometo cuidarte, amarte y hacerte sonreír cada día más. Este es solo el inicio de muchos cumpleaños que quiero celebrar a tu lado. ¡Te amo con toda mi alma!"
+            }
+        };
+
+        function abrirCarta(id) {
+            document.getElementById('modal-titulo').innerText = mensajes[id].titulo;
+            document.getElementById('modal-texto').innerText = mensajes[id].texto;
+            document.getElementById('modal').classList.add('activo');
+            document.getElementById('overlay').classList.add('activo');
         }
+
+        function cerrarCarta() {
+            document.getElementById('modal').classList.remove('activo');
+            document.getElementById('overlay').classList.remove('activo');
+        }
+
+        // --- CÓDIGO ANIMACIÓN DE FUEGOS ARTIFICIALES (Canvas) ---
+        const canvas = document.getElementById('canvas-fuegos');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        class Particula {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.angulo = Math.random() * Math.PI * 2;
+                this.velocidad = Math.random() * 4 + 1;
+                this.friccion = 0.95;
+                this.gravedad = 0.07;
+                this.opacidad = 1;
+                this.desintegracion = Math.random() * 0.015 + 0.01;
+            }
+            actualizar() {
+                this.velocidad *= this.friccion;
+                this.x += Math.cos(this.angulo) * this.velocidad;
+                this.y += Math.sin(this.angulo) * this.velocidad + this.gravedad;
+                this.opacidad -= this.desintegracion;
+            }
+            dibujar() {
+                ctx.save();
+                ctx.globalAlpha = this.opacidad;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        let pirotecnia = [];
+
+        function crearFuegoArtificial() {
+            const x = Math.random() * width;
+            const y = Math.random() * (height * 0.6);
+            const colores = ['#ff3366', '#00f5d4', '#fee440', '#70e000', '#9b5de5', '#ff9f1c'];
+            const color = colores[Math.floor(Math.random() * colores.length)];
+            
+            for (let i = 0; i < 40; i++) {
+                pirotecnia.push(new Particula(x, y, color));
+            }
+        }
+
+        setInterval(crearFuegoArtificial, 800);
+
+        function animar() {
+            ctx.fillStyle = 'rgba(11, 1, 20, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+            
+            pirotecnia = pirotecnia.filter(p => p.opacidad > 0);
+            pirotecnia.forEach(p => {
+                p.actualizar();
+                p.dibujar();
+            });
+            requestAnimationFrame(animar);
+        }
+        animar();
     </script>
 </body>
 </html>
