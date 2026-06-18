@@ -11,7 +11,7 @@
             padding: 0;
         }
         body {
-            background-color: #05000a;
+            background-color: #030008;
             overflow: hidden;
             font-family: 'Arial', sans-serif;
             height: 100vh;
@@ -21,7 +21,7 @@
             align-items: center;
         }
 
-        /* Lienzo de las flores brillantes (Estilo de la imagen image_1b7edf.jpg) */
+        /* Lienzo de las flores brillantes */
         #canvas-flores {
             position: absolute;
             top: 0;
@@ -40,145 +40,166 @@
             width: 100%;
             height: 100%;
             z-index: 2;
-            pointer-events: none; /* Deja pasar los clics al pastel */
+            pointer-events: none;
         }
 
         /* Globos de corazón detrás */
         .globo-corazon {
             position: absolute;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             background-color: #ff3366;
             border-radius: 50%;
             bottom: -60px;
-            box-shadow: inset -4px -4px 10px rgba(0,0,0,0.2), 0 5px 15px rgba(255,51,102,0.4);
+            box-shadow: inset -3px -3px 8px rgba(0,0,0,0.2), 0 5px 10px rgba(255,51,102,0.3);
             animation: subir Vertical linear forwards;
-            opacity: 0.6;
+            opacity: 0.5;
         }
         .globo-corazon::before, .globo-corazon::after {
             content: "";
             position: absolute;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             background-color: inherit;
             border-radius: 50%;
         }
-        .globo-corazon::before { top: -17px; left: 0; }
-        .globo-corazon::after { left: -17px; top: 0; }
+        .globo-corazon::before { top: -15px; left: 0; }
+        .globo-corazon::after { left: -15px; top: 0; }
 
         @keyframes subir {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            100% { transform: translateY(-120vh) rotate(25deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            100% { transform: translateY(-120vh) rotate(30deg); opacity: 0; }
         }
 
-        /* --- CONTENEDOR DEL PASTEL CENTRAL --- */
+        /* Interfaz del Pastel */
         .interfaz-cumple {
             position: relative;
             z-index: 5;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
-        /* El Pastel de Cumpleaños Animado en CSS */
+        /* El Pastel Animado */
         .pastel {
             position: relative;
-            width: 180px;
-            height: 140px;
-            margin-top: 40px;
+            width: 160px;
+            height: 120px;
             cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .pastel:active {
+            transform: scale(0.95);
         }
         .piso {
             position: absolute;
             width: 100%;
-            height: 60px;
+            height: 50px;
             bottom: 0;
             background: #e07a5f;
-            border-radius: 15px 15px 5px 5px;
-            box-shadow: inset 0 5px 0 #f4a261;
+            border-radius: 12px 12px 5px 5px;
+            box-shadow: inset 0 4px 0 #f4a261;
         }
         .piso-superior {
             position: absolute;
-            width: 140px;
-            height: 50px;
-            bottom: 55px;
+            width: 120px;
+            height: 45px;
+            bottom: 45px;
             left: 20px;
             background: #f4a261;
-            border-radius: 10px 10px 5px 5px;
-            box-shadow: inset 0 5px 0 #fde2e4;
+            border-radius: 8px 8px 5px 5px;
+            box-shadow: inset 0 4px 0 #fde2e4;
         }
         .crema {
             position: absolute;
             width: 100%;
-            height: 15px;
+            height: 12px;
             background: #fff;
-            border-radius: 10px;
-            top: -5px;
+            border-radius: 8px;
+            top: -4px;
         }
-        /* Vela y Llama */
         .vela {
             position: absolute;
-            width: 8px;
-            height: 35px;
-            background: repeating-linear-gradient(45deg, #fff, #fff 5px, #ff3366 5px, #ff3366 10px);
-            bottom: 105px;
-            left: 86px;
-            border-radius: 3px;
+            width: 6px;
+            height: 30px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 4px, #ff3366 4px, #ff3366 8px);
+            bottom: 90px;
+            left: 77px;
+            border-radius: 2px;
         }
         .llama {
             position: absolute;
-            width: 16px;
-            height: 24px;
+            width: 14px;
+            height: 20px;
             background: #ffb703;
             border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
             transform: rotate(-45deg);
-            bottom: 140px;
-            left: 82px;
-            box-shadow: 0 0 20px #ffb703;
-            animation: parpadeo 0.6s infinite alternate;
-            transition: opacity 0.5s ease;
+            bottom: 120px;
+            left: 73px;
+            box-shadow: 0 0 15px #ffb703;
+            animation: parpadeo 0.5s infinite alternate;
+            transition: opacity 0.5s;
         }
         @keyframes parpadeo {
             0% { transform: rotate(-45deg) scale(1); }
-            100% { transform: rotate(-45deg) scale(1.15); }
+            100% { transform: rotate(-45deg) scale(1.2); }
         }
 
-        /* Cartelito de Mensaje Corto emergente */
-        .pop-mensaje {
+        /* --- NUEVO MENSAJE EN FORMA DE CORAZÓN GIGANTE --- */
+        .pop-corazon {
             position: fixed;
-            background: rgba(255, 255, 255, 0.95);
-            color: #ff3366;
-            padding: 12px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            width: 280px;
+            height: 280px;
+            background-color: rgba(255, 30, 80, 0.95);
+            transform: translate(-50%, -50%) rotate(-45deg) scale(0);
+            box-shadow: 0 15px 40px rgba(255, 51, 102, 0.5);
             z-index: 10;
             pointer-events: none;
-            animation: flotarMensaje 2.5s ease-out forwards;
-            text-align: center;
-            max-width: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: aparecerCorazon 2.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            top: 40%;
+            left: 50%;
         }
-        @keyframes flotarMensaje {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; top: 45%; left: 50%; }
-            15% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; top: 40%; left: 50%; }
-            85% { opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0; top: 30%; left: 50%; }
+        .pop-corazon::before, .pop-corazon::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background-color: rgba(255, 30, 80, 0.95);
+            border-radius: 50%;
+        }
+        .pop-corazon::before { top: -140px; left: 0; }
+        .pop-corazon::after { left: -140px; top: 0; }
+
+        /* Texto dentro del corazón (enderezado para que se lea bien) */
+        .texto-corazon {
+            transform: rotate(45deg);
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            padding: 20px;
+            z-index: 12;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+            line-height: 1.4;
+            max-width: 230px;
+        }
+
+        @keyframes aparecerCorazon {
+            0% { transform: translate(-50%, -40%) rotate(-45deg) scale(0); opacity: 0; }
+            12% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); opacity: 1; }
+            88% { opacity: 1; transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
+            100% { transform: translate(-50%, -60%) rotate(-45deg) scale(0.8); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Fondo de flores meciéndose (Estilo CSS/JS inspirado en la imagen) -->
     <canvas id="canvas-flores"></canvas>
 
-    <!-- Capa intermedia con cientos de globos flotando -->
     <div id="contenedor-globos"></div>
 
-    <!-- Elemento interactivo principal -->
     <div class="interfaz-cumple">
         <div class="pastel" onclick="tocarPastel()">
             <div class="llama" id="fuego-vela"></div>
@@ -189,43 +210,52 @@
     </div>
 
     <script>
-        // --- TEXTOS CORTOS PARA MOSTRAR AL TOCAR EL PASTEL ---
+        // --- TUS FRASES EN CORAZONES ---
         const frasesAmor = [
-            "Eres la mujer más hermosa de todo el universo 😍",
-            "¡Feliz Cumpleaños, mi reina hermosa! 🎂",
-            "Te amo con todas las fuerzas de mi corazón ❤️",
-            "Cada momento que paso a tu lado es mágico ✨",
-            "Eres y siempre serás mi persona favorita 🧸",
-            "Gracias por llenar mis días de tanta felicidad 🌹",
-            "Me tienes locamente enamorado 🥰",
-            "Tu hermosa sonrisa alegra mi mundo entero 💖",
-            "Eres el regalo más lindo que me dio la vida 🌍",
-            "Mi lugar seguro siempre será entre tus brazos 💞"
+            "Eres la mujer más hermosa del mundo 😍",
+            "¡Feliz Cumpleaños, mi reina! 🎂",
+            "Te amo con todo mi corazón ❤️",
+            "Cada segundo contigo es perfecto ✨",
+            "Eres mi persona favorita 🧸",
+            "Gracias por existir 🌹",
+            "Me encantas completita 🥰",
+            "Tu sonrisa es mi motor 💖",
+            "Eres lo mejor de mi vida 🌍",
+            "Mi lugar seguro eres tú 💞"
         ];
 
         let indiceMensaje = 0;
 
         function tocarPastel() {
-            // Apaga la vela de forma realista en el primer toque
+            // Apagar la vela
             const vela = document.getElementById('fuego-vela');
             if (vela.style.opacity !== '0') {
                 vela.style.opacity = '0';
             }
 
-            // Crear el mensaje emergente en el centro
-            const cartel = document.createElement('div');
-            cartel.classList.add('pop-mensaje');
-            cartel.innerText = frasesAmor[indiceMensaje];
-            
-            document.body.appendChild(cartel);
+            // Eliminar corazones anteriores si la novia da muchos clics rápidos
+            const viejoCorazon = document.querySelector('.pop-corazon');
+            if (viejoCorazon) viejoCorazon.remove();
 
-            // Rotar los mensajes continuamente
+            // Crear el contenedor con forma de corazón
+            const corazon = document.createElement('div');
+            corazon.classList.add('pop-corazon');
+
+            // Crear el texto interno
+            const texto = document.createElement('div');
+            texto.classList.add('texto-corazon');
+            texto.innerText = frasesAmor[indiceMensaje];
+            
+            corazon.appendChild(texto);
+            document.body.appendChild(corazon);
+
+            // Cambiar de frase para el siguiente clic
             indiceMensaje = (indiceMensaje + 1) % frasesAmor.length;
 
-            setTimeout(() => { cartel.remove(); }, 2500);
+            setTimeout(() => { corazon.remove(); }, 2800);
         }
 
-        // --- LLUVIA DE CIENTOS DE GLOBOS DE CORAZÓN ---
+        // --- GENERADOR CONSTANTE DE GLOBOS (Cientos de ellos) ---
         const contenedorGlobos = document.getElementById('contenedor-globos');
         const tonosRosa = ['#ff3366', '#ff5e7e', '#ff0040', '#ff85a1', '#ff4d6d'];
 
@@ -234,21 +264,20 @@
             globo.classList.add('globo-corazon');
             globo.style.left = Math.random() * 95 + '%';
             
-            const escala = Math.random() * 0.5 + 0.5; // Escalas variadas
+            const escala = Math.random() * 0.4 + 0.4; // Variedad de tamaño
             globo.style.transform = `scale(${escala})`;
             globo.style.backgroundColor = tonosRosa[Math.floor(Math.random() * tonosRosa.length)];
 
-            const duracion = Math.random() * 5 + 4; // Velocidad constante
+            const duracion = Math.random() * 4 + 4; // Suben rápido y fluido
             globo.style.animationDuration = duracion + 's';
 
             contenedorGlobos.appendChild(globo);
             setTimeout(() => { globo.remove(); }, duracion * 1000);
         }
-        // Genera un globo de manera ininterrumpida cada 100ms para llenar el fondo
-        setInterval(generarGlobo, 100);
+        setInterval(generarGlobo, 80); // Genera globos masivamente
 
 
-        // --- LÓGICA DE LAS FLORES BRILLANTES (Inspirado en la imagen image_1b7edf.jpg) ---
+        // --- LÓGICA DE CIENTOS DE FLORES DE NEÓN MECIÉNDOSE ---
         const canvas = document.getElementById('canvas-flores');
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
@@ -262,66 +291,447 @@
         class FlorFondo {
             constructor(x) {
                 this.x = x;
-                this.altura = Math.random() * (height * 0.4) + (height * 0.4); // Altura de los tallos
-                this.colorTallo = 'rgba(34, 139, 34, 0.25)';
-                // Colores brillantes neón estilo la imagen
-                const coloresFlor = ['#ff0055', '#ff5500', '#ff00aa', '#cc00ff', '#ff3300'];
+                // Alturas variadas para llenar toda la pantalla baja y media
+                this.altura = Math.random() * (height * 0.5) + (height * 0.3); 
+                this.colorTallo = 'rgba(46, 139, 87, 0.2)';
+                
+                // Colores vivos sacados de tu captura de TikTok
+                const coloresFlor = ['#ff0055', '#ff4500', '#ff00aa', '#b100ff', '#ff1a40', '#ff7300'];
                 this.colorFlor = coloresFlor[Math.floor(Math.random() * coloresFlor.length)];
+                
                 this.faseViento = Math.random() * 100;
-                this.velocidadViento = Math.random() * 0.02 + 0.01;
-                this.radioFlor = Math.random() * 8 + 12;
+                this.velocidadViento = Math.random() * 0.015 + 0.008;
+                this.radioFlor = Math.random() * 6 + 10;
+                this.profundidad = Math.random(); // Controla qué tan al fondo o al frente está
             }
 
             dibujar(tiempo) {
-                // Cálculo físico del balanceo simulado con ondas seno
-                const balanceo = Math.sin(tiempo * this.velocidadViento + this.faseViento) * 25;
+                // Balanceo natural simulando el viento
+                const balanceo = Math.sin(tiempo * this.velocidadViento + this.faseViento) * 30;
                 const destinoX = this.x + balanceo;
                 const destinoY = height - this.altura;
 
-                // Dibujar el tallo curvo estilizado
+                // Tallo
                 ctx.beginPath();
                 ctx.strokeStyle = this.colorTallo;
-                ctx.lineWidth = 2;
+                ctx.lineWidth = this.profundidad * 1.5 + 0.5;
                 ctx.moveTo(this.x, height);
-                ctx.quadraticCurveTo(this.x + balanceo * 0.3, height - this.altura * 0.5, destinoX, destinoY);
+                ctx.quadraticCurveTo(this.x + balanceo * 0.4, height - this.altura * 0.5, destinoX, destinoY);
                 ctx.stroke();
 
-                // Dibujar la cabeza de la flor con un resplandor de neón (Glow effect)
+                // Flor con efecto Glow de Neón
                 ctx.save();
-                ctx.shadowBlur = 15;
+                // Las de adelante brillan más que las del fondo
+                ctx.shadowBlur = this.profundidad * 12 + 6;
                 ctx.shadowColor = this.colorFlor;
                 ctx.fillStyle = this.colorFlor;
+                ctx.globalAlpha = this.profundidad * 0.5 + 0.4;
 
-                // Estilo pétalos abstractos superpuestos
+                // 5 Pétalos redondos perfectos superpuestos
                 for (let i = 0; i < 5; i++) {
                     const angulo = (i * Math.PI * 2) / 5;
-                    const px = destinoX + Math.cos(angulo) * (this.radioFlor * 0.6);
-                    const py = destinoY + Math.sin(angulo) * (this.radioFlor * 0.6);
+                    const px = destinoX + Math.cos(angulo) * (this.radioFlor * 0.5);
+                    const py = destinoY + Math.sin(angulo) * (this.radioFlor * 0.5);
                     ctx.beginPath();
-                    ctx.arc(px, py, this.radioFlor * 0.5, 0, Math.PI * 2);
+                    ctx.arc(px, py, this.radioFlor * 0.45, 0, Math.PI * 2);
                     ctx.fill();
                 }
 
-                // Centro de la flor brillante
-                ctx.fillStyle = '#fffb00';
+                // Centro amarillo brillante
+                ctx.fillStyle = '#fff700';
                 ctx.beginPath();
-                ctx.arc(destinoX, destinoY, this.radioFlor * 0.3, 0, Math.PI * 2);
+                ctx.arc(destinoX, destinoY, this.radioFlor * 0.25, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
             }
         }
 
-        // Crear una hilera densa de flores en la base de la pantalla
+        // CREAR CIENTOS DE FLORES (Aumentamos drásticamente la densidad)
         const flores = [];
-        const densidadFlores = Math.floor(width / 15); // Una flor cada 15 pixeles
-        for (let i = 0; i < densidadFlores; i++) {
+        const cantidadFlores = Math.floor(width / 4); // ¡Cientos de flores en toda la base!
+        for (let i = 0; i < cantidadFlores; i++) {
             flores.push(new FlorFondo(Math.random() * width));
         }
 
+        // Ordenar flores por profundidad para que las del fondo se dibujen primero
+        flores.sort((a, b) => a.profundidad - b.profundidad);
+
         let tiempo = 0;
         function bucleAnimacion() {
-            // Fondo semitransparente oscuro para simular estelas de movimiento continuas
-            ctx.fillStyle = 'rgba(5, 0, 10, 0.15)';
+            // Fondo oscuro para dar el rastro mágico del neón
+            ctx.fillStyle = 'rgba(3, 0, 8, 0.18)';
+            ctx.fillRect(0, 0, width, height);
+
+            tiempo++;
+            flores.forEach(flor => flor.dibujar(tiempo));
+
+            requestAnimationFrame(bucleAnimacion);
+        }
+        bucleAnimacion();
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Shey ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #030008;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Lienzo de las flores brillantes */
+        #canvas-flores {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Contenedor dinámico de globos */
+        #contenedor-globos {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Globos de corazón detrás */
+        .globo-corazon {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #ff3366;
+            border-radius: 50%;
+            bottom: -60px;
+            box-shadow: inset -3px -3px 8px rgba(0,0,0,0.2), 0 5px 10px rgba(255,51,102,0.3);
+            animation: subir Vertical linear forwards;
+            opacity: 0.5;
+        }
+        .globo-corazon::before, .globo-corazon::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: inherit;
+            border-radius: 50%;
+        }
+        .globo-corazon::before { top: -15px; left: 0; }
+        .globo-corazon::after { left: -15px; top: 0; }
+
+        @keyframes subir {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            100% { transform: translateY(-120vh) rotate(30deg); opacity: 0; }
+        }
+
+        /* Interfaz del Pastel */
+        .interfaz-cumple {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+        }
+
+        /* El Pastel Animado */
+        .pastel {
+            position: relative;
+            width: 160px;
+            height: 120px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .pastel:active {
+            transform: scale(0.95);
+        }
+        .piso {
+            position: absolute;
+            width: 100%;
+            height: 50px;
+            bottom: 0;
+            background: #e07a5f;
+            border-radius: 12px 12px 5px 5px;
+            box-shadow: inset 0 4px 0 #f4a261;
+        }
+        .piso-superior {
+            position: absolute;
+            width: 120px;
+            height: 45px;
+            bottom: 45px;
+            left: 20px;
+            background: #f4a261;
+            border-radius: 8px 8px 5px 5px;
+            box-shadow: inset 0 4px 0 #fde2e4;
+        }
+        .crema {
+            position: absolute;
+            width: 100%;
+            height: 12px;
+            background: #fff;
+            border-radius: 8px;
+            top: -4px;
+        }
+        .vela {
+            position: absolute;
+            width: 6px;
+            height: 30px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 4px, #ff3366 4px, #ff3366 8px);
+            bottom: 90px;
+            left: 77px;
+            border-radius: 2px;
+        }
+        .llama {
+            position: absolute;
+            width: 14px;
+            height: 20px;
+            background: #ffb703;
+            border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+            transform: rotate(-45deg);
+            bottom: 120px;
+            left: 73px;
+            box-shadow: 0 0 15px #ffb703;
+            animation: parpadeo 0.5s infinite alternate;
+            transition: opacity 0.5s;
+        }
+        @keyframes parpadeo {
+            0% { transform: rotate(-45deg) scale(1); }
+            100% { transform: rotate(-45deg) scale(1.2); }
+        }
+
+        /* --- NUEVO MENSAJE EN FORMA DE CORAZÓN GIGANTE --- */
+        .pop-corazon {
+            position: fixed;
+            width: 280px;
+            height: 280px;
+            background-color: rgba(255, 30, 80, 0.95);
+            transform: translate(-50%, -50%) rotate(-45deg) scale(0);
+            box-shadow: 0 15px 40px rgba(255, 51, 102, 0.5);
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: aparecerCorazon 2.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            top: 40%;
+            left: 50%;
+        }
+        .pop-corazon::before, .pop-corazon::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            background-color: rgba(255, 30, 80, 0.95);
+            border-radius: 50%;
+        }
+        .pop-corazon::before { top: -140px; left: 0; }
+        .pop-corazon::after { left: -140px; top: 0; }
+
+        /* Texto dentro del corazón (enderezado para que se lea bien) */
+        .texto-corazon {
+            transform: rotate(45deg);
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            padding: 20px;
+            z-index: 12;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+            line-height: 1.4;
+            max-width: 230px;
+        }
+
+        @keyframes aparecerCorazon {
+            0% { transform: translate(-50%, -40%) rotate(-45deg) scale(0); opacity: 0; }
+            12% { transform: translate(-50%, -50%) rotate(-45deg) scale(1); opacity: 1; }
+            88% { opacity: 1; transform: translate(-50%, -50%) rotate(-45deg) scale(1); }
+            100% { transform: translate(-50%, -60%) rotate(-45deg) scale(0.8); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-flores"></canvas>
+
+    <div id="contenedor-globos"></div>
+
+    <div class="interfaz-cumple">
+        <div class="pastel" onclick="tocarPastel()">
+            <div class="llama" id="fuego-vela"></div>
+            <div class="vela"></div>
+            <div class="piso-superior"><div class="crema"></div></div>
+            <div class="piso"><div class="crema"></div></div>
+        </div>
+    </div>
+
+    <script>
+        // --- TUS FRASES EN CORAZONES ---
+        const frasesAmor = [
+            "Eres la mujer más hermosa del mundo 😍",
+            "¡Feliz Cumpleaños, mi reina! 🎂",
+            "Te amo con todo mi corazón ❤️",
+            "Cada segundo contigo es perfecto ✨",
+            "Eres mi persona favorita 🧸",
+            "Gracias por existir 🌹",
+            "Me encantas completita 🥰",
+            "Tu sonrisa es mi motor 💖",
+            "Eres lo mejor de mi vida 🌍",
+            "Mi lugar seguro eres tú 💞"
+        ];
+
+        let indiceMensaje = 0;
+
+        function tocarPastel() {
+            // Apagar la vela
+            const vela = document.getElementById('fuego-vela');
+            if (vela.style.opacity !== '0') {
+                vela.style.opacity = '0';
+            }
+
+            // Eliminar corazones anteriores si la novia da muchos clics rápidos
+            const viejoCorazon = document.querySelector('.pop-corazon');
+            if (viejoCorazon) viejoCorazon.remove();
+
+            // Crear el contenedor con forma de corazón
+            const corazon = document.createElement('div');
+            corazon.classList.add('pop-corazon');
+
+            // Crear el texto interno
+            const texto = document.createElement('div');
+            texto.classList.add('texto-corazon');
+            texto.innerText = frasesAmor[indiceMensaje];
+            
+            corazon.appendChild(texto);
+            document.body.appendChild(corazon);
+
+            // Cambiar de frase para el siguiente clic
+            indiceMensaje = (indiceMensaje + 1) % frasesAmor.length;
+
+            setTimeout(() => { corazon.remove(); }, 2800);
+        }
+
+        // --- GENERADOR CONSTANTE DE GLOBOS (Cientos de ellos) ---
+        const contenedorGlobos = document.getElementById('contenedor-globos');
+        const tonosRosa = ['#ff3366', '#ff5e7e', '#ff0040', '#ff85a1', '#ff4d6d'];
+
+        function generarGlobo() {
+            const globo = document.createElement('div');
+            globo.classList.add('globo-corazon');
+            globo.style.left = Math.random() * 95 + '%';
+            
+            const escala = Math.random() * 0.4 + 0.4; // Variedad de tamaño
+            globo.style.transform = `scale(${escala})`;
+            globo.style.backgroundColor = tonosRosa[Math.floor(Math.random() * tonosRosa.length)];
+
+            const duracion = Math.random() * 4 + 4; // Suben rápido y fluido
+            globo.style.animationDuration = duracion + 's';
+
+            contenedorGlobos.appendChild(globo);
+            setTimeout(() => { globo.remove(); }, duracion * 1000);
+        }
+        setInterval(generarGlobo, 80); // Genera globos masivamente
+
+
+        // --- LÓGICA DE CIENTOS DE FLORES DE NEÓN MECIÉNDOSE ---
+        const canvas = document.getElementById('canvas-flores');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        class FlorFondo {
+            constructor(x) {
+                this.x = x;
+                // Alturas variadas para llenar toda la pantalla baja y media
+                this.altura = Math.random() * (height * 0.5) + (height * 0.3); 
+                this.colorTallo = 'rgba(46, 139, 87, 0.2)';
+                
+                // Colores vivos sacados de tu captura de TikTok
+                const coloresFlor = ['#ff0055', '#ff4500', '#ff00aa', '#b100ff', '#ff1a40', '#ff7300'];
+                this.colorFlor = coloresFlor[Math.floor(Math.random() * coloresFlor.length)];
+                
+                this.faseViento = Math.random() * 100;
+                this.velocidadViento = Math.random() * 0.015 + 0.008;
+                this.radioFlor = Math.random() * 6 + 10;
+                this.profundidad = Math.random(); // Controla qué tan al fondo o al frente está
+            }
+
+            dibujar(tiempo) {
+                // Balanceo natural simulando el viento
+                const balanceo = Math.sin(tiempo * this.velocidadViento + this.faseViento) * 30;
+                const destinoX = this.x + balanceo;
+                const destinoY = height - this.altura;
+
+                // Tallo
+                ctx.beginPath();
+                ctx.strokeStyle = this.colorTallo;
+                ctx.lineWidth = this.profundidad * 1.5 + 0.5;
+                ctx.moveTo(this.x, height);
+                ctx.quadraticCurveTo(this.x + balanceo * 0.4, height - this.altura * 0.5, destinoX, destinoY);
+                ctx.stroke();
+
+                // Flor con efecto Glow de Neón
+                ctx.save();
+                // Las de adelante brillan más que las del fondo
+                ctx.shadowBlur = this.profundidad * 12 + 6;
+                ctx.shadowColor = this.colorFlor;
+                ctx.fillStyle = this.colorFlor;
+                ctx.globalAlpha = this.profundidad * 0.5 + 0.4;
+
+                // 5 Pétalos redondos perfectos superpuestos
+                for (let i = 0; i < 5; i++) {
+                    const angulo = (i * Math.PI * 2) / 5;
+                    const px = destinoX + Math.cos(angulo) * (this.radioFlor * 0.5);
+                    const py = destinoY + Math.sin(angulo) * (this.radioFlor * 0.5);
+                    ctx.beginPath();
+                    ctx.arc(px, py, this.radioFlor * 0.45, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Centro amarillo brillante
+                ctx.fillStyle = '#fff700';
+                ctx.beginPath();
+                ctx.arc(destinoX, destinoY, this.radioFlor * 0.25, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        // CREAR CIENTOS DE FLORES (Aumentamos drásticamente la densidad)
+        const flores = [];
+        const cantidadFlores = Math.floor(width / 4); // ¡Cientos de flores en toda la base!
+        for (let i = 0; i < cantidadFlores; i++) {
+            flores.push(new FlorFondo(Math.random() * width));
+        }
+
+        // Ordenar flores por profundidad para que las del fondo se dibujen primero
+        flores.sort((a, b) => a.profundidad - b.profundidad);
+
+        let tiempo = 0;
+        function bucleAnimacion() {
+            // Fondo oscuro para dar el rastro mágico del neón
+            ctx.fillStyle = 'rgba(3, 0, 8, 0.18)';
             ctx.fillRect(0, 0, width, height);
 
             tiempo++;
