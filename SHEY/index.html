@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Novia ❤️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffe6e6;
+            text-align: center;
+            padding: 20px;
+            color: #333;
+        }
+        .carta {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 50px auto;
+        }
+        h1 { color: #ff4d6d; }
+        button {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #ff758f; }
+        .oculto { display: none; margin-top: 20px; font-size: 18px; color: #ff4d6d; }
+    </style>
+</head>
+<body>
+
+    <div class="carta">
+        <h1>¡Feliz Cumpleaños! 💖</h1>
+        <p>Hola mi vida, preparé esta página web especialmente para ti porque eres la persona más importante en mi mundo.</p>
+        
+        <button onclick="revelarMensaje()">Toca aquí si me amas</button>
+        
+        <div id="mensaje" class="oculto">
+            <p>🎉 ¡Te amo con todo mi corazón! 🎉</p>
+            <p>Gracias por cada sonrisa. ¡Espero que pases un día increíble hoy! 🌹</p>
+        </div>
+    </div>
+
+    <script>
+        function revelarMensaje() {
+            document.getElementById('mensaje').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
